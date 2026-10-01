@@ -131,12 +131,12 @@ with col2:
     )
 
     # 레이아웃 설정
-    fig.update_layout(
+   fig.update_layout(
         xaxis_title="연도",
         yaxis_title="연평균기온 (°C)",
         hovermode="closest",
-        legend=dict(orient="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        margin=dict(l=20, r=20, t=40, b=20),
+        legend_orientation="h",
+        margin=dict(l=20, r=20, t=40, b=20)
     )
 
     st.plotly_chart(fig, use_container_width=True)
