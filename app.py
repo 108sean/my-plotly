@@ -40,11 +40,9 @@ def load_and_process_data():
 df_clean = load_and_process_data()
 
 # 2. 선형 회귀 모델 계산 (1계 다항식)
-# X: 1908년 기준 경과연수, Y: 연평균기온
 x = df_clean["경과연수"].values
 y = df_clean["연평균기온"].values
 
-# 회귀 계수 (기울기, 절편)
 slope, intercept = np.polyfit(x, y, 1)
 
 # 상관계수 계산
@@ -56,7 +54,7 @@ data_count = len(df_clean)
 start_year = int(df_clean["연도"].min())
 end_year = int(df_clean["연도"].max())
 
-# 3. 사이드바 / 상단 정보 표시
+# 3. 레이아웃 구성
 col1, col2 = st.columns([1, 2])
 
 with col1:
@@ -71,7 +69,9 @@ with col1:
     )
 
     st.subheader("🔮 기온 예측 (슬라이더)")
-    target_year = st.slider("연도를 선택하세요", min_value=1900, max_value=2100, value=2026, step=1)
+    target_year = st.slider(
+        "연도를 선택하세요", min_value=1900, max_value=2100, value=2026, step=1
+    )
 
     # Target Year 예상 기온 계산
     target_elapsed = target_year - 1908
@@ -83,7 +83,6 @@ with col1:
         delta=f"1908년 대비 {predicted_temp - (slope * 0 + intercept):+.2f} °C 변화 추정",
     )
 
-# 4. Plotly 시각화
 with col2:
     st.subheader("📊 연도별 연평균기온 및 회귀 직선")
 
@@ -131,12 +130,12 @@ with col2:
     )
 
     # 레이아웃 설정
-   fig.update_layout(
+    fig.update_layout(
         xaxis_title="연도",
         yaxis_title="연평균기온 (°C)",
         hovermode="closest",
         legend_orientation="h",
-        margin=dict(l=20, r=20, t=40, b=20)
+        margin=dict(l=20, r=20, t=40, b=20),
     )
 
     st.plotly_chart(fig, use_container_width=True)
