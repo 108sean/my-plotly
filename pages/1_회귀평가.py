@@ -42,7 +42,7 @@ test_data = clean_yearly[
 ].copy()
 
 
-# 3. 모델 평가 및 기울기 계산 함수
+# 3. 모델 학습 및 평가 함수
 def fit_and_evaluate(train_df, test_df, model_name):
     X_tr, y_tr = train_df["경과연수"].values, train_df["연평균기온"].values
     slope, intercept = np.polyfit(X_tr, y_tr, 1)
@@ -73,4 +73,18 @@ res_100, slope_100, intercept_100 = fit_and_evaluate(
     train_100, test_data, "최근 100년 학습 (1906~2005)"
 )
 res_50, slope_50, intercept_50 = fit_and_evaluate(
-    train_
+    train_50, test_data, "최근 50년 학습 (1956~2005)"
+)
+
+# 4. 성능 평가 표
+st.subheader("📋 1. 회귀 모델 평가 지표 (MAE, MSE, R²)")
+df_eval = pd.DataFrame([res_full, res_100, res_50])
+st.dataframe(df_eval, use_container_width=True)
+
+# 5. 핵심 결과 메트릭 카드
+st.subheader("🔍 2. 학습 기간에 따른 기울기 및 예측 성능 비교")
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric(
+        label="
