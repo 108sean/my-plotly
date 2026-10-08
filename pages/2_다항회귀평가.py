@@ -63,41 +63,4 @@ for deg in degrees:
     poly_coeffs = np.polyfit(X_tr, y_tr, deg)
     poly_func = np.poly1d(poly_coeffs)
 
-    models[deg] = poly_func
-
-    # 테스트 데이터 예측 및 평가
-    y_pred = poly_func(X_te)
-    mae = mean_absolute_error(y_te, y_pred)
-    mse = mean_squared_error(y_te, y_pred)
-    r2 = r2_score(y_te, y_pred)
-
-    # 2050년 예측값 계산
-    pred_2050 = poly_func(x_2050)
-
-    results.append(
-        {
-            "차수": f"{deg}차 모델",
-            "MAE (평균 빗나간 정도)": f"{mae:.3f} °C",
-            "MSE": round(mse, 3),
-            "R² Score": round(r2, 3),
-            "2050년 예측기온": f"{pred_2050:.2f} °C",
-        }
-    )
-
-# 4. 평가 요약표 출력
-st.subheader("📋 테스트 데이터 성능 평가 및 2050년 예측 비교")
-st.dataframe(pd.DataFrame(results), use_container_width=True)
-
-# 5. 시각화 (Plotly)
-st.subheader("📊 차수별 다항 회귀 곡선 및 2050년 추세 예측")
-
-years_plot = np.arange(1908, 2051)
-elapsed_plot = years_plot - 1908
-
-fig = go.Figure()
-
-# 훈련 데이터 점
-fig.add_trace(
-    go.Scatter(
-        x=train_df["연도"],
-        y=train_
+    models[deg] = poly
